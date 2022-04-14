@@ -1,0 +1,32 @@
+.navbar-mine{
+    background-color: black;
+    border-radius: 30px;
+    
+}
+.navbar-mine ul{
+    overflow: auto;
+}
+.navbar-mine li{
+    float:left;
+    list-style: none; 
+    margin: 13px 20px;
+    
+}
+.navbar-mine li a{
+    padding: 3px 3px;
+    text-decoration: none;
+    color: white;
+}
+.navbar-mine li a:hover{
+    color: red
+}
+.search{
+    float: right;
+    color: white;
+}
+.navbar-mine input{
+    border: 2px solid black;
+    border-radius: 14px;
+    padding: 3px 17px;
+    width: 129px;
+}

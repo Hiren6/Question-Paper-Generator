@@ -1,0 +1,20 @@
+{
+  "name": "question-paper-generator",
+  "version": "1.0.0",
+  "description": "DB Project to generate question papers from a database of questions",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon -L app.js",
+    "start": "nodemon -L app.js"
+  },
+  "author": "DB Cooper",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.3"
+  }
+}
