@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include("./partial/head.ejs") %>
+
+</head>
+<body>
+    <%- include("./partial/parent_nav.ejs") %>
+    <div>
+        <!-- include chapter names abd buttn to switch btw chapters,ta and qp -->
+        <%- include("./partial/course_button.ejs") %>
+        <div>
+            <!-- modal button for add -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add chapter</button>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add chapter</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Chapter ID</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Chapter Name</label>
+                        <input class="form-control" id="message-text">
+                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Add</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <div>
+                <% cList.forEach((y)=>{%> 
+                    <div class="row border border-bottom-2">
+                        <a href="/CoursePage/course_name/<%= y.chapter_name %> " style="text-decoration: none;"   >
+                       <h3><%= y.chapter_name %> </h3> 
+                        </a>
+                    </div>
+                    
+                    <%}) %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
