@@ -25,12 +25,12 @@
                     <div class="modal-body">
                         <form>
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Chapter ID</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <label for="recipient-name" class="col-form-label">Chapter No</label>
+                            <input type="text" class="form-control" id="chapter-no">
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Chapter Name</label>
-                            <input class="form-control" id="message-text">
+                            <input class="form-control" id="chapter-name">
                         </div>
                         </form>
                     </div>
@@ -52,15 +52,18 @@
                           </tr>
                         </thead>
                         <tbody>
+                            <% int i=1; %>
+                            <%= chapter.forEach((c)=>{ %>
+                                <tr>
+                                    <th scope="row"> <%= i %> </th>
+                                    <td> <%= chapter.chapter_name %> </td>
+                                    <td>
+                                      <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%= c.chapter_name%>">Delete</button>
+                                      <a href="/<%= c.course_id%>" class="btn btn-info" role="button">View</a>
+                                    </td>
+                                  </tr>
+                            i=i+1;} ) %> 
 
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Buy groceries for next week</td>
-                            <td>
-                              <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="ID">Delete</button>
-                              <a href="/course/course_page/chapter" class="btn btn-info" role="button">View</a>
-                            </td>
-                          </tr>
                         </tbody>
                       </table>
                     <!-- delete MOdal -->
@@ -88,8 +91,8 @@
                     var recipient = button.getAttribute('data-bs-whatever')
                     var modalTitle = exampleModal.querySelector('.modal-title')
                     var modalBodyInput = exampleModal.querySelector('.modal-body ')
-                    modalTitle.textContent = 'New message to ' + recipient
-                    modalBodyInput.textContent = recipient + ' will be delete from Course list' 
+                    modalTitle.textContent = Delete Confirmation
+                    modalBodyInput.textContent ='"' recipient + '" will be delete from chapter list' 
                     })
                 </script>
             </div>
