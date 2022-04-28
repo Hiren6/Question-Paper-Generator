@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include("./partials/head.ejs") %>
+
+</head>
+<body>
+    <%- include("./partials/parent_nav.ejs") %>
+
+    <div class="container  bg-dark p-4 px-5">
+        <!-- include chapter names abd buttn to switch btw chapters,ta and qp -->
+        <div class="container p-2  bg-white text-center" >
+            <!-- modal button for add -->
+
+            <div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#chapterModal" data-bs-whatever="blah">Add Question</button>
+
+                <div class="modal fade" id="chapterModal" tabindex="-1" aria-labelledby="chapterModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="chapterModalLabel">Add Question</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="/#">
+                            <!-- question type -->
+                            <div class="mb-3">
+                                <label for="difficulty" class="col-form-label">Question Difficulty</label>
+                                <select class="form-control" name="difficulty" id="qType" onChange="handleType(value)">
+                                    <option value="Easy">Easy</option>
+                                    <option value="Moderate">Moderate</option>
+                                    <option value="Hard">Hard</option>
+                                    <option value="Challenging">Challenging</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="q_type" class="col-form-label">Question Type</label>
+                                <select class="form-control" name="q_type" id="qType" onChange="handleType(value)">
+                                    <option value="Subjective">Subjective</option>
+                                    <option value="MCQ">MCQ</option>
+                                </select>
+                            </div>
+                            <!-- Question text -->
+                            <div class="mb-3">
+                                <label for="q_stmt" class="col-form-label">Question</label>
+                                <textarea class="form-control" id="q_stmt"></textarea>
+                            </div>
+                            <!-- MCQ options -->
+                            <div class="mb-3" id="MCQ" style="display: none;">
+                                <label for="a" class="col-form-label">Option a</label>
+                                <input class="form-control" id="b" type="text"><br>
+                                <label for="b" class="col-form-label">Option b</label>
+                                <input class="form-control" id="b" type="text"><br>
+                                <label for="c" class="col-form-label">Option c</label>
+                                <input class="form-control" id="c" type="text"><br>
+                                <label for="d" class="col-form-label">Option d</label>
+                                <input class="form-control" id="d" type="text">
+                            </div>
+                        </form>
+                        <script>
+                            function handleType(value){
+                                if(value=="MCQ"){
+                                    document.getElementById("MCQ").style.display="inline-block";
+                                }else{
+                                    document.getElementById("MCQ").style.display="none";
+                                }
+                            }
+                        </script>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Add</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="container p-2 bg-white">
+                    <table class="table mb-4">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Questions</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Difficulty</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <% let i=1 %>
+                            <% question.forEach((q)=>{ %>
+                                <tr>
+                                    <th scope="row"> <%=i%></th>
+                                    <td>
+                                        <% if(q.q_type=="MCQ"){ %>
+                                        <% let q_options=q.q_stmt.split("#$") %>
+                                        <p><%= q_options[0]%></p><br>
+                                        <p> (a) <%= q_options[1] %> </p> <br>
+                                        <p> (a) <%= q_options[1] %> </p> <br>
+                                        <p> (a) <%= q_options[1] %> </p> <br>
+                                        <p> (a) <%= q_options[1] %> </p> <br>
+                                        <%} else {%>
+                                        <p><%= q.question %></p>
+                                        <%}%>
+                                    </td>
+                                    <td>
+                                        <%=q.q_type%>
+                                    </td>
+                                    <td>
+                                        <%=q.difficulty  %> 
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            <% i=i+1;}) %>
+                        </tbody>
+                      </table>
+                    <!-- delete MOdal -->
+                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel">Delete Chapter</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Delete Chapter</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Confirm</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <script>
+                    var exampleModal = document.getElementById('deleteModal')
+                    exampleModal.addEventListener('show.bs.modal', function (event) {
+                    var button = event.relatedTarget
+                    var recipient = button.getAttribute('data-bs-whatever')
+                    var modalTitle = exampleModal.querySelector('.modal-title')
+                    var modalBodyInput = exampleModal.querySelector('.modal-body ')
+                    modalTitle.textContent = Delete Confirmation
+                    modalBodyInput.textContent ='"' recipient + '" will be delete from chapter list' 
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>
