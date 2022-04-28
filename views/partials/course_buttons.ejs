@@ -1,0 +1,37 @@
+<div class="container my-1 bg-warning ">
+    <!-- <div class="cb-billing-plans-text cb-team-lft-item">  -->
+    <div class="row">
+        <h1 class="pt-3  display-6 fw-bold" style="line-height: 24px;" itemprop="name"> <%=course_id %></h1> 
+    </div>
+    <!-- PROVIDE LINKS INSTEAD OF FUNCTION-->
+    <nav class="pt-3 pb-0 clearfix" role="navigation">
+        <!-- <button id="scard" type="button" class="btn btn-light btn-lg " onclick="score()" aria-pressed="true">Chapters</button>
+        <button id="scompare" type="button" class="btn btn-light btn-lg " onclick="comparision()" aria-pressed="true">Show TAS</button>
+        <button id="summary" type="button" class="btn btn-light btn-lg " onclick="summary()" aria-pressed="true">Question Papers</button> -->
+        <a href="/course/<%=course_id[0] %>" class="btn btn-info" role="button">Chapters</a>
+        <a href="/course/TA/<%=course_id[0] %>" class="btn btn-info" role="button">Show TAs</a>
+        <a href="/course/paper/<%=course_id[0] %>" class="btn btn-info" role="button">Question Papers</a>
+
+    </nav>
+
+    <!-- <script>
+        function score(){
+            document.getElementById("table").style.display="inline-block";
+            document.getElementById("compare").style.display="none";
+            document.getElementById("match-summary").style.display="none";
+        }
+        function comparision(){
+            document.getElementById("table").style.display="none";
+            document.getElementById("compare").style.display="inline-block";
+            document.getElementById("match-summary").style.display="none";
+
+        }
+        function summary(){
+            document.getElementById("table").style.display="none";
+            document.getElementById("compare").style.display="none";
+            document.getElementById("match-summary").style.display="inline-block";
+
+        }
+        
+    </script> -->
+</div>
