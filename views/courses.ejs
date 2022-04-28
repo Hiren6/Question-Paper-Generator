@@ -22,7 +22,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/" method="post">
+                        <form action="/dashboard/<%=user_id[0]%>/add" method="post">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Course ID</label>
                             <input type="text" class="form-control" id="recipient-name">
@@ -62,7 +62,7 @@
                                       <a href="/<%= c.course_id%>" class="btn btn-info" role="button">View</a>
                                     </td>
                                   </tr>
-                            } ) %> 
+                            <% i=i+1 } ) %> 
                         </tbody>
                       </table>
                 <!-- delete MOdal -->
