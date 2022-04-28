@@ -1,23 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../models/user");
-const passport = require('passport');
-const bcrypt = require('bcrypt');
+const client = require('../models/db').client
 
-router.get('/chapter/:c_name', async (req, res) => {
+router.get('/:c_id', async (req, res) => {
 
-    const {c_name} = req.params;
+    const {c_id} = req.params;
 
     const q_list = `select q_stmt from Question
-    join Chapter on Question.chapter_id
-    Chapter.chapter_id
-    where chapter_name = $1`;
+    where chapter_id = $1`;
 
     try {
-        const questions = await client.query(q_list,[c_name]);
+        const questions = await client.query(q_list,[c_id]);
 
-        res.render('get_questions', {
-            chapter_name : c_name,
+        res.render('chapter', {
+            chapter_id : c_id,
             questions : questions.rows
         }); 
     }
@@ -25,3 +21,32 @@ router.get('/chapter/:c_name', async (req, res) => {
     catch (e) { console.error(e.message); }
 
 });
+
+router.post('/:c_id/add', async (req, res) => {
+    const {question_id,q_stmt,q_type,difficulty,chapter_id} = req.body;
+    let errors = [];
+    if(!question_id || !q_stmt || !q_type || !difficulty){
+        errors.push({ msg: "Please fill in all the fields" })
+    }
+    if(errors.length>0){
+        res.render(':c_id/add', {
+            errors: errors,
+            question_id : question_id,
+            q_stmt : q_stmt,
+            q_type : q_type,
+            difficulty : difficulty,
+            chapter_id : chapter_id
+        });
+    }
+    const q_add = `insert into Question
+    Values($1,$2,$3,$4,$5)`;
+
+    const insert_ques = await client.query(q_add,[question_id,q_stmt,q_type,difficulty,chapter_id]);
+
+    res.redirect('/chapter/:c_id');
+}); 
+
+module.exports = router;
+
+
+
