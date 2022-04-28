@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const flash = require('connect-flash');
 const session = require('express-session');
 const bodyParser = require('body-parser')
-const passport = require("passport");
+const passport = require('passport');
 
 // passport config:
 require('./config/passport')(passport)
@@ -49,7 +49,7 @@ app.use((req,res,next)=> {
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error  = req.flash('error');
     next();
-})
+});
 
 const {ensureAuthenticated} = require("./config/auth.js")
 
@@ -59,7 +59,7 @@ app.get('/', (req, res) => {
 
 // homepage
 app.get('/dashboard', ensureAuthenticated, (req, res) => {
-    res.render('home');
+    res.render('home', {user: req.user.user_name});
 });
 
 // login, register and logout

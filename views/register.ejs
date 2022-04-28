@@ -1,45 +1,85 @@
-<h1>Register</h1>
-<%- include ('./partials/messages') %>
-<form action="/users/register" method="POST">
-<div>
-    <label for="name">Name</label>
-    <input
-      type="name"
-      name="name"
-      placeholder="Enter Name"
-      value="<%= typeof name != 'undefined' ? name : '' %>"
-    />
-  
-</div>
-<div>
-    <label for="email">Email</label>
-    <input
-      type="email"
-      name="email"
-      placeholder="Enter Email"
-      value="<%= typeof email != 'undefined' ? email : '' %>"
-    />
-  </div>
-  <div >
-    <label for="password">Password</label>
-    <input
-      type="password"
-      name="password"
-      placeholder="Create Password"
-      value="<%= typeof password != 'undefined' ? password : '' %>"
-    />
-  </div>
-  <div >
-    <label for="password2">Confirm Password</label>
-    <input
-      type="password"
-      name="password2"
-      placeholder="Confirm Password"
-      value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
-    />
-  </div>
-  <button type="submit" class="btn btn-primary btn-block">
-    Register
-  </button>
-</form>
-<p >Have An Account? <a href="/users/login">Login</a></p>
+<html>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/css/register.css" type="text/css">
+
+</head>
+<body>
+    <section class="vh-100 gradient-custom">
+      <div class="container  h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-dark bg-gradient text-white" style="border-radius: 1rem;">
+              <div class="card-body p-2 px-5 text-center">
+                
+                <div class="mb-md-5 mt-md-4 ">
+                  <form action="/users/register" method="POST">
+                    <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
+                    <p class="text-white-50 mb-5"> <%- include ('./partials/messages') %> </p>
+    
+                  <div class="form-outline form-white mb-2">
+                    <input type="name" name="name" id="typeNameX" class="form-control " required/>
+                    <label class="form-label" for="typeNameX">Name</label>
+                  </div>
+
+                  <div class="form-outline form-white mb-2">
+                    <input type="email" name="email" id="typeEmailX" class="form-control " required/>
+                    <label class="form-label" for="typeEmailX">Email</label>
+                  </div>
+                  
+                  <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="typeNameZ">Authorization </label>
+                    <select name="authorization_level" onChange="yesnoCheck(value)">
+                      <option value="Professor">Professor</option>
+                      <option value="TA">TA</option>
+                    </select>
+                  </div>
+
+                  <div id="TA" style="display: none;" class="form-inline form-white mb-2">
+                    <label for="roll_no">Roll No.</label> 
+                    <input class="form-control float-left" type="text" id="roll_no" name="roll" required/>
+                    <br />
+                  </div>
+              
+                  <div class="form-outline form-white mb-2">
+                    <input type="password" name="password" id="typePasswordX" class="form-control " required/>
+                    <label class="form-label" for="typePasswordX">Password</label>
+                  </div>
+
+                  <div class="form-outline form-white mb-2">
+                    <input type="password" name="password2" id="typePasswordY" class="form-control " required/>
+                    <label class="form-label" for="typePasswordY">Confirm Password</label>
+                  </div>
+    
+                  <!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
+    
+                  <button class="btn btn-outline-light btn-lg px-5 mb-3 mt-3" type="submit">Submit</button>
+                  <div>
+                    <a href="/users/login" class="text-white-50 mb-5"> Click here to login </a>
+                  </div>
+                  
+                </form>
+                  <script>
+                    function yesnoCheck(value) {
+                      if (value == "TA") {
+                        document.getElementById("TA").style.display = "inline-block";
+                      } else {
+                          document.getElementById("TA").style.display = "none";
+                      }
+                    }
+                  </script>
+                </div>
+    
+                <!-- <div>
+                  <p class="mb-0">Don't have an account? <a href="#!" class="text-white-50 fw-bold">Sign Up</a>
+                  </p>
+                </div> -->
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</body>
+</html>

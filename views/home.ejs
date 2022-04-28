@@ -19,11 +19,20 @@
             margin-right: auto;
             width: 50%;
         }
+        #hello {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <%- include('./partials/navbar.ejs') %> 
     <h2 id="heading">Welcome to Question Paper Generator!</h1>
+    <h3 id="hello"> Hello <%= user %> </h3>
+    <div>
+    <a href="/users/register">
+        <button>Register professor/TA</button>
+    </a>
+    </div>
     <img src="/assets/static/mr-bean-funny.gif" alt="I hope everything is ok!" class="center">
 </body>
 </html>
