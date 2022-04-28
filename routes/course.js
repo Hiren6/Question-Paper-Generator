@@ -60,9 +60,10 @@ router.get('/paper/:c_id', async (req, res) => {
 
 router.post('/remove/:c_id', async (req, res) => {
     const {chapter_id} = req.body;
+    const{c_id}=req.params;
     const blah = `Delete from Chapter where chapter_id = $1`;
     const rem_ques = await client.query(blah,[chapter_id]);
-    res.redirect('/course/:c_id');
+    res.redirect('/course/'+c_id);
 });
 
 module.exports = router;

@@ -14,8 +14,9 @@ router.get('/:u_id', ensureAuthenticated, async (req, res) => {
     try{
         const courses = await client.query(course_list,[u_id]);
 
-        res.render('course_page', {
-            courses : courses.rows
+        res.render('courses', {
+            courses : courses.rows,
+            user_id:u_id
         })
     }
     catch (e) { console.error(e.message); }
@@ -23,17 +24,19 @@ router.get('/:u_id', ensureAuthenticated, async (req, res) => {
 });
 
 router.post('/:u_id/add', ensureAuthenticated, async (req, res) => {
-    const {course_id,course_name,user_id} = req.body;
+    const {course_id,course_name} = req.body;
+    console.log(course_id + '\n' + course_name);
+    const {u_id}=req.params;
     let errors = [];
     if(!course_id || !course_name){
         errors.push({ msg: "Please fill in all the fields" })
     }
     if(errors.length>0){
-        res.render('err', {
+        res.render('courses', {
             errors: errors,
             course_id : course_id,
             course_name : course_name,
-            user_id : user_id
+            user_id : u_id
         });
     }
     const c_add = `insert into Course
@@ -42,16 +45,17 @@ router.post('/:u_id/add', ensureAuthenticated, async (req, res) => {
     values($1,$2)`;
 
     const insert_course = await client.query(c_add,[course_id,course_name]);
-    const insert_teach = await client.query(t_add,[user_id,  course_id])
+    const insert_teach = await client.query(t_add,[u_id,  course_id])
 
-    res.redirect('/:u_id');
+    res.redirect('/dashboard/'+u_id);
 }); 
 
 router.post('/remove/:u_id', ensureAuthenticated, async (req, res) => {
     const {course_id} = req.body;
+    const {u_id}=req.params;
     const blah = `Delete from Teaches where course_id = $1`;
     const rem_course = await client.query(blah,[course_id]);
-    res.redirect('/dashboard/:u_id');
+    res.redirect('/dashboard/'+u_id);
 });
 
 module.exports = router;

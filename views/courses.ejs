@@ -22,21 +22,22 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/dashboard/<%=user_id[0]%>/add" method="post">
+                        <form action="/dashboard/<%=user_id %>/add" method="post">
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Course ID</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <label for="course_id" class="col-form-label">Course ID</label>
+                            <input type="text" class="form-control" id="course_id" name="course_id">
                         </div>
                         <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Course Name</label>
-                            <input class="form-control" id="message-text">
+                            <label for="course_name" class="col-form-label">Course Name</label>
+                            <input class="form-control" id="course_name" name="course_name">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
                         </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add</button>
-                    </div>
+
                     </div>
                 </div>
                 </div>
@@ -52,14 +53,14 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <% int i=1 %>
-                            <%= course.forEach((c)=>{ %>
+                            <% let i=1 %>
+                            <% courses.forEach((c)=>{ %>
                                 <tr>
                                     <th scope="row"> <%= i %> </th>
                                     <td> <%= c.course_name %> </td>
                                     <td>
                                       <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%= c.course_id%>">Delete</button>
-                                      <a href="/<%= c.course_id%>" class="btn btn-info" role="button">View</a>
+                                      <a href="/course/<%= c.course_id%>" class="btn btn-info" role="button">View</a>
                                     </td>
                                   </tr>
                             <% i=i+1 } ) %> 
@@ -74,12 +75,15 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <form action="/dashboard/remove/<%= user_id%>" method="POST">
                             <p>Delete Course</p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                              </div>
+                        </form>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Confirm</button>
-                        </div>
+
                       </div>
                     </div>
                 </div>

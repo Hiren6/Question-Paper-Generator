@@ -24,6 +24,7 @@ router.get('/:c_id', async (req, res) => {
 
 router.post('/:c_id/add', async (req, res) => {
     const {question_id,q_stmt,q_type,difficulty,chapter_id} = req.body;
+    const {c_id}=req.params;
     let errors = [];
     if(!question_id || !q_stmt || !q_type || !difficulty){
         errors.push({ msg: "Please fill in all the fields" })
@@ -43,7 +44,7 @@ router.post('/:c_id/add', async (req, res) => {
 
     const insert_ques = await client.query(q_add,[question_id,q_stmt,q_type,difficulty,chapter_id]);
 
-    res.redirect('/chapter/:c_id');
+    res.redirect('/chapter/'+c_id);
 }); 
 
 module.exports = router;
