@@ -56,10 +56,10 @@
                             <% let i=1 %>
                             <% courses.forEach((c)=>{ %>
                                 <tr>
-                                    <th scope="row"> <%= i %> </th>
+                                    <th scope="row"> <%= c.course_id %> </th>
                                     <td> <%= c.course_name %> </td>
                                     <td>
-                                      <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%= c.course_id%>">Delete</button>
+                                      <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever=" <%=c.course_id%>">Delete</button>
                                       <a href="/course/<%= c.course_id%>" class="btn btn-info" role="button">View</a>
                                     </td>
                                   </tr>
@@ -75,8 +75,9 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/dashboard/remove/<%= user_id%>" method="POST">
-                            <p>Delete Course</p>
+                            <form action="/dashboard/remove/<%= user_id%>" method="POST" id="deleteForm">
+                            <input class="cc_id"type="text" id="course_ID" >
+                            <p> will be deleted from course list</p>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Confirm</button>
@@ -92,12 +93,14 @@
                     exampleModal.addEventListener('show.bs.modal', function (event) {
                     var button = event.relatedTarget
                     var recipient = button.getAttribute('data-bs-whatever')
-
+                    console.log("blah")
+                    //var recipient=data.split("/")
+                    //console.log("blah")
+                    //console.log(recipient)
                     var modalTitle = exampleModal.querySelector('.modal-title')
                     var modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-                    modalTitle.textContent = 'New message to ' + recipient
-                    modalBodyInput.textContent = recipient + ' will be deleted from course list'
+                    modalTitle.textContent = 'Delete ' + recipient
+                    modalBodyInput.textContent = recipient
                     })
                 </script>
             </div>
