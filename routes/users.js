@@ -6,9 +6,10 @@ const {ensureAuthenticated} = require("../config/auth.js")
 const client = require('../models/db').client
 
 // Login page
-router.get('/login', (req, res) => {
-    if(req.isAuthenticated())
+router.get('/login', (req, res) => { 
+    if(req.isAuthenticated()) {
         res.redirect('/dashboard')
+    }
     else
         res.render('login');
 })

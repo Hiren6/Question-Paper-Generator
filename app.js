@@ -57,10 +57,14 @@ app.get('/', (req, res) => {
     res.render('login');
 });
 
-// homepage
-app.get('/dashboard', ensureAuthenticated, (req, res) => {
-    res.render('home', {user: req.user.user_name});
-});
-
 // login, register and logout
-app.use('/users',require('./routes/users'));
+app.use('/users', require('./routes/users'));
+
+// homepage
+app.use('/dashboard', ensureAuthenticated, require('./routes/home'))
+
+// course
+app.use('/course', ensureAuthenticated, require('./routes/course'))
+
+// chapter
+app.use('/chapter', ensureAuthenticated, require('./routes/chapter'))
