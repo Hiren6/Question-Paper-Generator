@@ -7,13 +7,16 @@ const bcrypt = require('bcrypt');
 router.get('/course/:c_id', async (req, res) => {
     const {c_id} = req.params;
     const chapter_list = `Select chapter_no, chapter_name from Chapter where course_id = $1`;
+    const c_name = `Select course_name from Course where course_id = $1`
     
     try{
         const chapters = await client.query(chapter_list,[c_id]);
+        const chap_name = await client.query(c_name,[c_id]);
 
         res.render('get_chapters', {
             course_id : c_id,
-            chapter : chapters.rows
+            chapter : chapters.rows,
+            chap_name : chap_name.rows[0]
         })
     }
     catch (e) { console.error(e.message); }
@@ -57,3 +60,10 @@ router.get('/course/paper/:c_id', async (req, res) => {
 
 });
 
+router.post('/course/remove/:c_id', async (req, res) => {
+    const {chapter_id} = req.body;
+    blah = `Delete from Chapter where chapter_id = $1`;
+    const rem_ques = await client.query(blah,[chapter_id]);
+    res.redirect('/course/:c_id');
+
+});
