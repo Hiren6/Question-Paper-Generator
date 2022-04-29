@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const {ensureAuthenticated} = require("../config/auth.js")
 const client = require('../models/db').client
-
 router.get('/', ensureAuthenticated, async (req, res) => {
     res.redirect('/dashboard/' + req.user.user_id);
 })
@@ -25,7 +24,6 @@ router.get('/:u_id', ensureAuthenticated, async (req, res) => {
 
 router.post('/:u_id/add', ensureAuthenticated, async (req, res) => {
     const {course_id,course_name} = req.body;
-    console.log(course_id + '\n' + course_name);
     const {u_id}=req.params;
     let errors = [];
     if(!course_id || !course_name){
@@ -57,5 +55,12 @@ router.post('/remove/:u_id', ensureAuthenticated, async (req, res) => {
     const rem_course = await client.query(blah,[course_id]);
     res.redirect('/dashboard/'+u_id);
 });
+
+
+
+
+
+
+
 
 module.exports = router;
