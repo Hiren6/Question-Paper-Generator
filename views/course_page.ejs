@@ -23,14 +23,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/course/add/<%= course_id%>" method="POST">
+                        <form action="/course/add/<%= course_id %>" method="POST">
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Chapter No</label>
-                            <input type="text" class="form-control" id="chapter-no">
+                            <label for="chapter_no" class="col-form-label">Chapter No</label>
+                            <input type="number" class="form-control" id="chapter_no" name="chapter_no">
                         </div>
                         <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Chapter Name</label>
-                            <input class="form-control" id="chapter-name" type="text">
+                            <label for="chapter_name" class="col-form-label">Chapter Name</label>
+                            <input class="form-control" name="chapter_name" id="chapter_name" type="text">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -54,7 +54,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <%= chapter.forEach((c)=>{ %>
+                            <% chapter.forEach((c)=>{ %>
                                 <tr>
                                     <th scope="row"> <%= c.chapter_no %> </th>
                                     <td> <%= c.chapter_name %> </td>
