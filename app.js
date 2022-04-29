@@ -54,7 +54,7 @@ app.use((req,res,next)=> {
 const {ensureAuthenticated} = require("./config/auth.js")
 
 app.get('/', (req, res) => {
-    res.render('login');
+    res.redirect('/users/login')
 });
 
 // login, register and logout

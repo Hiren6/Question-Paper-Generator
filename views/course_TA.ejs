@@ -18,21 +18,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form method="POST" action="/">
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Roll No</label>
                                 <input type="text" class="form-control " id="recipient-name">
                             </div>
-                            <!-- <div class="mb-3">
-                                <label for="message-text" class="col-form-label"></label>
-                                <textarea class="form-control" id="message-text"></textarea>
-                            </div> -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Add</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -42,20 +39,20 @@
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Course Name</th>
+                    <th scope="col">TA Name</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Buy groceries for next week</td>
-                        <td>
-                            <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="ID">Delete</button>
-                            <a href="/course/course_page" class="btn btn-success ms-1" role="button">View</a>
-                        </td>
-                    </tr>
+                    <% TAList.forEach((t)=>{ %>
+                        <tr>
+                            <th scope="row"><%= t.roll_no %></th>
+                            <td>t.name</td>
+                            <td>
+                                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%=TA.name%>">Delete</button>
+                            </td>
+                        </tr>
+                   <% }) %>
                 </tbody>
             </table>
                 <!-- delete MOdal -->
@@ -71,7 +68,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Confirm</button>
+                        <a href="/#/<%=TA.name %>" class="btn btn-primary">Confirm</a>
                     </div>
                 </div>
                 </div>

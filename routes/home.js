@@ -49,10 +49,12 @@ router.post('/:u_id/add', ensureAuthenticated, async (req, res) => {
 }); 
 
 router.post('/remove/:u_id', ensureAuthenticated, async (req, res) => {
-    const {course_id} = req.body;
+    const {course_ID}=req.body;
     const {u_id}=req.params;
-    const blah = `Delete from Teaches where course_id = $1`;
-    const rem_course = await client.query(blah,[course_id]);
+    console.log("Deleting" + course_ID + "and" + u_id);
+    console.log(req.body);
+    const blah = `Delete from Teaches where course_ID = $1 and user_id = $2`;
+    const rem_course = await client.query(blah,[course_ID, u_id]);
     res.redirect('/dashboard/'+u_id);
 });
 

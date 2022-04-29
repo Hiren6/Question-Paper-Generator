@@ -23,21 +23,23 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="/#" method="POST">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Chapter No</label>
                             <input type="text" class="form-control" id="chapter-no">
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Chapter Name</label>
-                            <input class="form-control" id="chapter-name">
+                            <input class="form-control" id="chapter-name" type="text">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
                         </div>
                         </form>
+
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add</button>
-                    </div>
+
                     </div>
                 </div>
                 </div>
@@ -46,23 +48,22 @@
                     <table class="table mb-4">
                         <thead>
                           <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col">Ch. No</th>
                             <th scope="col">Chapter Name</th>
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                            <% int i=1; %>
                             <%= chapter.forEach((c)=>{ %>
                                 <tr>
-                                    <th scope="row"> <%= i %> </th>
-                                    <td> <%= chapter.chapter_name %> </td>
+                                    <th scope="row"> <%= c.chapter_no %> </th>
+                                    <td> <%= c.chapter_name %> </td>
                                     <td>
                                       <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%= c.chapter_name%>">Delete</button>
-                                      <a href="/<%= c.course_id%>" class="btn btn-info" role="button">View</a>
+                                      <a href="/chapter/<%= c.chapter_id%>" class="btn btn-info" role="button">View</a>
                                     </td>
                                   </tr>
-                            i=i+1;} ) %> 
+                            <% } ) %> 
 
                         </tbody>
                       </table>
