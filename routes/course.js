@@ -4,6 +4,12 @@ const { ensureAuthenticated } = require('../config/auth');
 const router = express.Router();
 const client = require('../models/db').client
 
+//for pdf
+var bodyParser = require('body-parser');
+var pdf        = require('html-pdf');
+var fs         = require('fs');
+var options    = {format:'A4'};
+
 router.get('/:c_id', async (req, res) => {
     const {c_id} = req.params;
     const chapter_list = `Select chapter_id, chapter_no, chapter_name from Chapter where course_id = $1`;
@@ -164,4 +170,32 @@ router.get('generatepaper/:c_id/:p_id', ensureAuthenticated, async (req,res) => 
 
 });
 
+//pdf gen
+router.get('/paperPDF/:paper_id',ensureAuthenticated,async(req,res)=>{
+    const{paper_id}=req.params;
+    const qList=`select q_stmt,q_type from Paper_question join Question on Paper_question.question_id=Question.quesition_id
+                where paper_id=$1
+                order by q_type`;
+    const Paper=`select * from Paper where paper_id=$1`;
+    try{
+        const getQList=await client.query(qList,[paper_id])
+        const paper=await client.query(Paper,[paper_id])
+        let pdfName=(paper.rows[0].paper_id).toString()+'.pdf'
+        res.render('paper_html.ejs',{question:getQList.rows,paper:paper.rows[0]},function(err,html){
+            pdf.create(html, options).toFile('../public/uploads/'+pdfName, function(err, result) {
+                if (err){
+                    return console.log(err);
+                }
+                 else{
+                console.log(res);
+                var datafile = fs.readFileSync('../public/uploads/demopdf.pdf');
+                res.header('content-type','application/pdf');
+                res.send(datafile);
+                 }
+              });
+        })
+    }
+    catch (e) { console.error(e.message); }
+
+});
 module.exports = router;
