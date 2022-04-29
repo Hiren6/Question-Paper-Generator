@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include("./partials/head.ejs") %>
+
+</head>
+<body>
+    <%- include("./partials/parent_nav.ejs") %>   
+    <div class="container p-2  bg-white text-center" >
+        <!-- modal button for add -->
+        <div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#chapterModal" data-bs-whatever="blah">Add Paper</button>
+        </div>
+
+        <div class="container p-2 bg-white">
+            <table class="table mb-4">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Paper Type</th>
+                    <th scope="col">Date </th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% int i=1; %>
+                    <%= papers.forEach((p)=>{ %>
+                        <tr>
+                            <th scope="row"> <%= i %> </th>
+                            <td> <%=p.paper_type  %> </td>
+                            <td><%= p.paper_date%></td>
+                            <td>
+                              <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%= c.chapter_name%>">Delete</button>
+                              <a href="/#" class="btn btn-info" role="button">View</a>
+                            </td>
+                          </tr>
+                    <% i=i+1;} ) %> 
+
+                </tbody>
+              </table>
+            <!-- delete MOdal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Delete Chapter</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Delete Chapter</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Confirm</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <script>
+            var exampleModal = document.getElementById('deleteModal')
+            exampleModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget
+            var recipient = button.getAttribute('data-bs-whatever')
+            var modalTitle = exampleModal.querySelector('.modal-title')
+            var modalBodyInput = exampleModal.querySelector('.modal-body ')
+            modalTitle.textContent = Delete Confirmation
+            modalBodyInput.textContent ='"' recipient + '" will be delete from chapter list' 
+            })
+        </script>
+    </div>
+    </div>
+</body>
+</html>
