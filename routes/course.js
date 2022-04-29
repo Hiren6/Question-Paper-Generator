@@ -170,30 +170,34 @@ router.post('/generateq/:c_id/:p_id', ensureAuthenticated, async (req, res) => {
     res.redirect('/course/form2/'+c_id+'/'+p_id);
 });
 
-router.get('generatepaper/:c_id/:p_id', ensureAuthenticated, async (req,res) => {
-    const{p_id} = req.params;
+router.post('generatepaper/:c_id/:p_id', ensureAuthenticated, async (req,res) => {
+    const {chapter_no,q_type,difficulty,num} = req.body;
+    const {c_id,p_id} = req.params;
+    const generate_question = `select question_id from Question
+                                join Chapter on Question.chapter_id = Chapter.chapter_id
+                                join Course on Chapter.course_id = Course.course_id
+                                where Course.course_id = $1 and q_type = $2
+                                and difficulty = $3 and chapter_no = $4
+                                order by RANDOM() Limit $5`;
 
-    const finalgen = `select q_stmt, q_type from Question
-    join Paper_question on Question.question_id
-    Paper_question.question_id
-    where paper_id = $1
-    order by q_type`;
-
-    try{
-        
-        const final_gen = await client.query(finalgen,[p_id]) 
-        res.render('generate_paper', {
-            final_gen : final_gen.rows
-        })
+    const addcha = `select chapter_id from Chapter where chapter_no = $1 and course_id = $2`;
+    const genchap = `insert into Paper_chapter select $1,$2 where not exists (select 1 from Paper_chapter where paper_id=$1 and chapter_id=$2)`;
+    const gen_q = await client.query(generate_question,[c_id,q_type,difficulty,chapter_no,num]);
+    for(let i =0; i< gen_q.rows.length;i++){
+        const addquestion = `insert into Paper_question select $1,$2 where not exists (select 1 from Paper_question where question_id = $1 and paper_id = $2)`;
+        const genadd = await client.query(addquestion,[gen_q.rows[i].question_id, p_id]);
     }
-    catch (e) { console.error(e.message); }
+    const add_cha = await client.query(addcha,[chapter_no,c_id]);
+    const gen_chap = await client.query(genchap,[p_id,add_cha.rows[0].chapter_id]);
+
+    res.redirect('/course/paper/'+p_id);
 
 });
 
 //pdf gen
 router.get('/paperPDF/:paper_id',ensureAuthenticated,async(req,res)=>{
     const{paper_id}=req.params;
-    const qList=`select q_stmt,q_type from Paper_question join Question on Paper_question.question_id=Question.quesition_id
+    const qList=`select q_stmt,q_type from Paper_question join Question on Paper_question.question_id=Question.question_id
                 where paper_id=$1
                 order by q_type`;
     const Paper=`select * from Paper where paper_id=$1`;
