@@ -63,11 +63,4 @@ router.post('/remove/:u_id/:c_id', ensureAuthenticated, async (req, res) => {
     res.redirect('/dashboard/'+u_id);
 });
 
-
-
-
-
-
-
-
 module.exports = router;

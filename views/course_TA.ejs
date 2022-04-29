@@ -18,10 +18,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="/">
+                        <form method="POST" action="/course/TA/<%= course_id %>">
                             <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Roll No</label>
-                                <input type="text" class="form-control " id="recipient-name">
+                                <label for="roll_no" class="col-form-label">Roll No</label>
+                                <input type="text" class="form-control " name="roll_no" id="roll_no" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

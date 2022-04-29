@@ -3,7 +3,6 @@ const cli = require('nodemon/lib/cli');
 const { ensureAuthenticated } = require('../config/auth');
 const router = express.Router();
 const client = require('../models/db').client
-let globallis = []
 
 router.get('/:c_id', async (req, res) => {
     const {c_id} = req.params;
@@ -44,6 +43,20 @@ router.get('/TA/:c_id', async (req, res) => {
 
 });
 
+router.post('/TA/:c_id', async (req, res) => {
+    const {roll_no} = req.body;
+    const {c_id} = req.params;
+    const find_uid_q = `select user_id from users where roll_no = $1`;
+    const insert_ta_q = `insert into Teaches(user_id, course_id) values($1, $2)`;
+    try{
+        const uid = await client.query(find_uid_q,[roll_no]);
+        const insert_TA = await client.query(insert_ta_q, [uid.rows[0].user_id, c_id]);
+        res.redirect('course/TA/' + c_id)
+    }
+    catch (e) { console.error(e.message); }
+
+});
+
 router.get('/paper/:c_id', async (req, res) => {
     const {c_id} = req.params;
 
@@ -73,8 +86,9 @@ router.post('/remove/:c_id', async (req, res) => {
 
 router.post('/add/:c_id', async (req, res) => {
     const {chapter_no,chapter_name} = req.body;
+    console.log(chapter_no + '\n' + chapter_name)
     const{c_id}=req.params;
-    const blah = `Insert into Chapter values($1,$2,$3)`;
+    const blah = `Insert into Chapter(chapter_no, chapter_name, course_id) values($1,$2,$3)`;
     const add_chap = await client.query(blah,[chapter_no,chapter_name,c_id]);
     res.redirect('/course/'+c_id);
 });
@@ -96,12 +110,7 @@ router.post('/generatep/:c_id', ensureAuthenticated, async (req, res) => {
 
 router.get('/form2/:c_id/:p_id', ensureAuthenticated, async (req,res) => {
     const{c_id,p_id} = req.params;
-    
-
-
     try{
-        
-        
         res.render('give_paper', {
             course_id : c_id,
             paper_id : p_id
