@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include("./partials/head.ejs") %>
+
+</head>
+<body>
+    <%- include("./partials/parent_nav.ejs") %>
+    
+<div>
+            <div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="AddModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="AddModalLabel">Paper Details</h2>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                        <div class="mb-3">
+                            <label for="total_marks" class="col-form-label">Total Marks</label><br>
+                            <input type="number" id="total_marks" min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="paper_type" class="col-form-label">Paper Type</label><br>
+                            <select class="form-control" name="paper_type" id="pType" onChange="handleType(value)">
+                                    <option value="Subjective">Subjective</option>
+                                    <option value="MCQ">MCQ</option>
+                            </select><br>
+                        </div>
+                        <div class="mb-3">
+                            <label for="paper_date" class="col-form-label">Date</label><br>
+                            <input type="date" id="paper_date" name="date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="duration" class="col-form-label">Duration(between 1-3 hours)</label><br>
+                        <input type="number" id="duration" name="duration" min="1" max="3">
+  </div>
+                        <div class="mb-3">
+                            <label for="start_time" class="col-form-label">Start Time</label><br>
+                            <input type="time" id="start_time" name="starttime">
+                        </div>
+                        </form>
+                    </div><br>
+                    
+                    </div>
+                </div>
+                </div>
+            </div>
+<div class="w3-container"><br>
+  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Next</button>
+
+  <div id="id01" class="w3-modal">
+    <div class="w3-modal-content">
+      <div class="w3-container">
+        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+        <form>
+        <label for="chapter_no">Chapter Number</label><br>
+  		<input type="number" id="chapter_no" name="chapter_no" min="1"><br>
+        <label for="q_type">Question Type</label><br>
+        <select class="form-control" name="q_type" id="qType" onChange="handleType(value)">
+                                    <option value="Subjective">Subjective</option>
+                                    <option value="MCQ">MCQ</option>
+                            </select><br>
+  		<label for="difficulty">Paper Difficulty</label><br>
+        <select class="form-control" name="difficulty" id="qType" onChange="handleType(value)">
+                                    <option value="Easy">Easy</option>
+                                    <option value="Moderate">Moderate</option>
+                                    <option value="Hard">Hard</option>
+                                    <option value="Challenging">Challenging</option>
+                                </select><br>
+  		<label for="fname">Number of questions</label><br>
+        <input type="number" id="quantity" name="quantity" min="1" max="50"><br><br>
+        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" class="btn btn-primary">Next</button>
+                    </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+            
+</body>
+</html>
