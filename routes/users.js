@@ -67,10 +67,17 @@ router.post('/register', ensureAuthenticated, async (req, res) => {
             }
             else {  // add new user
                 try {
-                    const q = `insert into users (user_name, authorization_level, email, password)
-                               values ($1, $2, $3, $4)
-                    `;
-                    const insert_user = await client.query(q, [name, authorization_level, email, hashedPassword]);
+                    if(authorization_level == 'TA') {
+                        let q = `insert into users (user_name, authorization_level, roll_no, email, password)
+                            values ($1, $2, $3, $4, $5)`;
+                        let insert_user = await client.query(q, [name, authorization_level, roll, email, hashedPassword]);
+                    }
+                    else {
+                        let q = `insert into users (user_name, authorization_level, email, password)
+                               values ($1, $2, $3, $4)`;
+                        let insert_user = await client.query(q, [name, authorization_level, email, hashedPassword]);
+                    }
+                    
                     req.flash("success_msg", "User successfully registered");
                     res.redirect('/users/register')
                 }
