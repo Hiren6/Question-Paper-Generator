@@ -6,7 +6,7 @@ router.get('/:c_id', async (req, res) => {
 
     const {c_id} = req.params;
 
-    const q_list = `select q_stmt from Question
+    const q_list = `select q_stmt,difficulty, q_type from Question
     where chapter_id = $1`;
 
     try {
@@ -14,7 +14,7 @@ router.get('/:c_id', async (req, res) => {
 
         res.render('chapter', {
             chapter_id : c_id,
-            questions : questions.rows
+            question : questions.rows
         }); 
     }
 
@@ -23,7 +23,10 @@ router.get('/:c_id', async (req, res) => {
 });
 
 router.post('/:c_id/add', async (req, res) => {
-    const {question_id,q_stmt,q_type,difficulty,chapter_id} = req.body;
+    const {difficulty,q_type,q_stmt,a,b,c,d} = req.body;
+    if (q_type == 'MCQ'){
+        q_stmt = q_stmt + '#$' + a + '#$' + b + '#$' + c + '#$' + d;
+    }
     const {c_id}=req.params;
     let errors = [];
     if(!question_id || !q_stmt || !q_type || !difficulty){
@@ -42,7 +45,7 @@ router.post('/:c_id/add', async (req, res) => {
     const q_add = `insert into Question
     Values($1,$2,$3,$4,$5)`;
 
-    const insert_ques = await client.query(q_add,[question_id,q_stmt,q_type,difficulty,chapter_id]);
+    const insert_ques = await client.query(q_add,[question_id,q_stmt,q_type,difficulty,c_id]);
 
     res.redirect('/chapter/'+c_id);
 }); 
