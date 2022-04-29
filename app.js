@@ -68,3 +68,7 @@ app.use('/course', ensureAuthenticated, require('./routes/course'))
 
 // chapter
 app.use('/chapter', ensureAuthenticated, require('./routes/chapter'))
+
+//student
+
+app.use('/student', require('./routes/student'));
