@@ -44,12 +44,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <% TAList.forEach((t)=>{ %>
+                    <% tas.forEach((t)=>{ %>
                         <tr>
                             <th scope="row"><%= t.roll_no %></th>
-                            <td>t.name</td>
+                            <td><%=t.user_name%></td>
                             <td>
-                                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%=TA.name%>">Delete</button>
+                                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%=t.user_name%>">Delete</button>
                             </td>
                         </tr>
                    <% }) %>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a href="/#/<%=TA.name %>" class="btn btn-primary">Confirm</a>
+                        <a href="/#" class="btn btn-primary">Confirm</a>
                     </div>
                 </div>
                 </div>
