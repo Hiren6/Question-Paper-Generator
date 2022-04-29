@@ -4,11 +4,12 @@ const { ensureAuthenticated } = require('../config/auth');
 const router = express.Router();
 const client = require('../models/db').client
 
-//for pdf
-var bodyParser = require('body-parser');
+// //for pdf
 var pdf        = require('html-pdf');
 var fs         = require('fs');
 var options    = {format:'A4'};
+//var bodyParser = require('body-parser');
+//router.use(bodyParser.urlencoded({extended:false}));
 
 router.get('/:c_id', async (req, res) => {
     const {c_id} = req.params;
@@ -30,11 +31,10 @@ router.get('/:c_id', async (req, res) => {
 
 router.get('/TA/:c_id', async (req, res) => {
     const {c_id} = req.params;
-    const ta_list = `select user_name, roll_no from Users
+    const ta_list = `select Users.user_id, user_name, roll_no from Users
                     join Teaches on Users.user_id = Teaches.user_id
                     where authorization_level = 'TA' and course_id = $1`;
     const c_name_query = `Select course_name from Course where course_id = $1`
-
     try{
 
         const tas = await client.query(ta_list,[c_id]);
@@ -69,10 +69,16 @@ router.post('/TA/:c_id', async (req, res) => {
     try{
         const uid = await client.query(find_uid_q,[roll_no]);
         const insert_TA = await client.query(insert_ta_q, [uid.rows[0].user_id, c_id]);
-        res.redirect('course/TA/' + c_id)
+        res.redirect('/course/TA/' + c_id)
     }
     catch (e) { console.error(e.message); }
+});
 
+router.get('/remove/TA/:course_id/:u_id', async (req, res) => {
+    const{course_id, u_id}=req.params;
+    const blah = `Delete from Teaches where course_id = $1 and user_id = $2`;
+    const rem_ques = await client.query(blah,[course_id, u_id]);
+    res.redirect('/course/TA/'+course_id);
 });
 
 router.get('/paper/:c_id', async (req, res) => {
@@ -204,20 +210,22 @@ router.get('/paperPDF/:paper_id',ensureAuthenticated,async(req,res)=>{
     try{
         const getQList=await client.query(qList,[paper_id])
         const paper=await client.query(Paper,[paper_id])
+
         let pdfName=(paper.rows[0].paper_id).toString()+'.pdf'
-        res.render('paper_html.ejs',{question:getQList.rows,paper:paper.rows[0]},function(err,html){
-            pdf.create(html, options).toFile('../public/uploads/'+pdfName, function(err, result) {
-                if (err){
-                    return console.log(err);
-                }
-                 else{
-                console.log(res);
-                var datafile = fs.readFileSync('../public/uploads/demopdf.pdf');
-                res.header('content-type','application/pdf');
-                res.send(datafile);
-                 }
-              });
-        })
+        res.render('paper_html',{question:getQList.rows,paper:paper.rows[0]})
+        // , function(err,html){
+        //     pdf.create(html, options).toFile('../public/uploads/'+pdfName, function(err, result) {
+        //         if (err){
+        //             return console.log(err);
+        //         }
+        //          else{
+        //         console.log(res);
+        //         var datafile = fs.readFileSync('../public/uploads/demopdf.pdf');
+        //         res.header('content-type','application/pdf');
+        //         res.send(datafile);
+        //          }
+        //       });
+        // })
     }
     catch (e) { console.error(e.message); }
 

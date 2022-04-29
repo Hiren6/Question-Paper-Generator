@@ -98,7 +98,9 @@
                         <div class="col-1 pe-1"><%= i%></div>
 
                         <div class="col-7 pe-1 trimText" >
-                            <p> <%=q.q_stmt%></p>
+                            <% let q_options=q.q_stmt.split("#$") %>
+                            <p> <%=q_options[0]%></p>
+
                             <!-- <% if(q.q_type=="MCQ"){ %>
                                 <% let q_options=q.q_stmt.split("#$") %>
                                 <p class="w-100 "><%= q_options[0]%></p><br>
@@ -114,9 +116,8 @@
                         <div class="col-1 pe-1"><%=q.q_type%></div>
                         <div class="col-1 pe-1"><%=q.difficulty%></div>
                         <div class="col-2 ">
-                            <a href="/chapter/remove/<%= q.question_id %>/<%= q.chapter_id %>" class="btn btn-danger" onclick="return confirm('Are you sure to remove this question?')">Delete</a>                                      
-                            <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%= q.question_id%>">Delete</button>
-                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#qViewModal" data-bs-whatever="<%=q.q_stmt%>">View Question</button>
+                            <a href="/chapter/remove/<%= q.question_id %>/<%= chapter_id %>" class="btn btn-danger" onclick="return confirm('Are you sure to remove this question?')">Delete</a>                                      
+                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#qViewModal" data-bs-whatever="<%=q.q_stmt%>">View</button>
                         </div>    
                     </div>    
                 

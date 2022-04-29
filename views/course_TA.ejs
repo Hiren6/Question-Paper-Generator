@@ -26,7 +26,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Add</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
                             </div>
                         </form>
                     </div>
@@ -50,7 +50,7 @@
                             <th scope="row"><%= t.roll_no %></th>
                             <td><%=t.user_name%></td>
                             <td>
-                                <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%=t.user_name%>">Delete</button>
+                            <a href="/course/remove/TA/<%= course_id %>/<%= t.user_id %>" class="btn btn-danger" onclick="return confirm('Are you sure to remove this question?')">Delete</a>          
                             </td>
                         </tr>
                    <% }) %>

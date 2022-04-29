@@ -51,7 +51,7 @@ router.post('/:c_id/add', async (req, res) => {
     res.redirect('/chapter/'+c_id);
 });
 
-router.get('/remove/:q_id/:chapter_id', async (req, res) => {
+router.get('/remove/:q_id/:chapter_id'  , async (req, res) => {
     const {q_id, chapter_id} = req.params;
     const query = `Delete from Question where question_id = $1`;
     const rem_question = await client.query(query,[q_id]);

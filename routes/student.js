@@ -29,3 +29,5 @@ router.post('/add/:sroll_no', async (req,res) => {
     const add_pap = await client.query(addpap,[sroll_no,p_id,response]);
     res.redirect('/student/' + sroll_no);
 });
+
+module.exports = router
