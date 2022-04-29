@@ -59,7 +59,7 @@
                                     <th scope="row"> <%= c.course_id %> </th>
                                     <td> <%= c.course_name %> </td>
                                     <td>
-                                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever=" <%=c.course_id%>">Delete</button>
+                                      <a href="/dashboard/remove/<%= user_id %>/<%= c.course_id %>" class="btn btn-danger" onclick="return confirm('Are you sure to remove <%= c.course_id %>?')">Delete</a>
                                       <a href="/course/<%= c.course_id%>" class="btn btn-info" role="button">View</a>
                                     </td>
                                   </tr>

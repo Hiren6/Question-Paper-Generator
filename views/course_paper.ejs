@@ -5,12 +5,59 @@
 
 </head>
 <body>
-    <%- include("./partials/parent_nav.ejs") %>   
+    <%- include("./partials/parent_nav.ejs") %> 
+    <div class="container  bg-dark p-4 px-5">
+      <%- include("./partials/course_buttons.ejs") %>    
     <div class="container p-2  bg-white text-center" >
         <!-- modal button for add -->
         <div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#chapterModal" data-bs-whatever="blah">Add Paper</button>
-        </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#PapModal" data-bs-whatever="blah">Add Paper</button>
+        
+            <div class="modal fade" id="PapModal" tabindex="-1" aria-labelledby="PapModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                  <div class="modal-header">
+                      <h2 class="modal-title" id="PapModalLabel">Paper Details</h2>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form method="post" action="/course/generatep/<%=course_id%>">
+                      <div class="mb-3">
+                          <label for="total_marks" class="col-form-label">Total Marks</label><br>
+                          <input type="number" id="total_marks" name="total_marks" min="0">
+                      </div>
+                      <div class="mb-3">
+                          <label for="paper_type" class="col-form-label">Paper Type</label><br>
+                          <select class="form-control" name="paper_type" id="paper_type" >
+                                  <option value="Assignment">Assignment</option>
+                                  <option value="Quiz">Quiz</option>
+                                  <option value="Midsem">Midsem</option>
+                                  <option value="Endsem">Endsem</option>
+                          </select><br>
+                      </div>
+                      <div class="mb-3">
+                          <label for="paper_date" class="col-form-label">Date</label><br>
+                          <input type="date" id="paper_date" name="paper_date">
+                      </div>
+                      <div class="mb-3">
+                          <label for="duration" class="col-form-label">Duration(mins)</label><br>
+                      <input type="number" id="duration" name="duration" min="10" max="240">
+                      </div>
+                      <div class="mb-3">
+                          <label for="start_time" class="col-form-label">Start Time</label><br>
+                          <input type="time" id="start_time" name="start_time">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                      </div>
+                      </form>
+                  </div>
+                  
+                  </div>
+              </div>
+          </div>
+          </div>
 
         <div class="container p-2 bg-white">
             <table class="table mb-4">
@@ -23,14 +70,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <% int i=1; %>
-                    <%= papers.forEach((p)=>{ %>
+                    <% let i=1; %>
+                    <% papers.forEach((p)=>{ %>
+                        <%console.log(p.paper_type)%>
                         <tr>
                             <th scope="row"> <%= i %> </th>
                             <td> <%=p.paper_type  %> </td>
                             <td><%= p.paper_date%></td>
                             <td>
-                              <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%= c.chapter_name%>">Delete</button>
+                              <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="<%= p.paper_type%>">Delete</button>
                               <a href="/#" class="btn btn-info" role="button">View</a>
                             </td>
                           </tr>
@@ -69,5 +117,8 @@
         </script>
     </div>
     </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 </body>
 </html>
