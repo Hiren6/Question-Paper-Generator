@@ -23,6 +23,7 @@ router.get('/:c_id', async (req, res) => {
             course_id : c_id,
             c : course_name.rows[0],
             chapter : chapters.rows,
+            title:"Chapter List"
         })
     }
     catch (e) { console.error(e.message); }
@@ -42,7 +43,8 @@ router.get('/TA/:c_id', async (req, res) => {
         res.render('course_TA', {
             course_id : c_id,
             c : course_name.rows[0],
-            tas : tas.rows
+            tas : tas.rows,
+            title:"TA List"
         })
     }
     catch (e) { console.error(e.message); }
@@ -95,7 +97,8 @@ router.get('/paper/:c_id', async (req, res) => {
         res.render('course_paper', {
             course_id : c_id,
             c : course_name.rows[0],
-            papers : papers.rows
+            papers : papers.rows,
+            title:"Paper List"
         })
     }
     catch (e) { console.error(e.message); }
@@ -146,7 +149,8 @@ router.get('/form2/:c_id/:p_id', ensureAuthenticated, async (req,res) => {
     try{
         res.render('generate_paper', {
             course_id : c_id,
-            paper_id : p_id
+            paper_id : p_id,
+            title:"Select Form"
         })
     }
     catch (e) { console.error(e.message); }
@@ -212,20 +216,19 @@ router.get('/paperPDF/:paper_id',ensureAuthenticated,async(req,res)=>{
         const paper=await client.query(Paper,[paper_id])
 
         let pdfName=(paper.rows[0].paper_id).toString()+'.pdf'
-        res.render('paper_html',{question:getQList.rows,paper:paper.rows[0]})
-        // , function(err,html){
-        //     pdf.create(html, options).toFile('../public/uploads/'+pdfName, function(err, result) {
-        //         if (err){
-        //             return console.log(err);
-        //         }
-        //          else{
-        //         console.log(res);
-        //         var datafile = fs.readFileSync('../public/uploads/demopdf.pdf');
-        //         res.header('content-type','application/pdf');
-        //         res.send(datafile);
-        //          }
-        //       });
-        // })
+        res.render('paper_html',{question:getQList.rows,paper:paper.rows[0]}, function(err,html){
+            pdf.create(html, options).toFile('../public/uploads/'+pdfName, function(err, result) {
+                if (err){
+                    return console.log(err);
+                }
+                 else{
+                console.log(res);
+                var datafile = fs.readFileSync('../public/uploads/'+pdfName);
+                res.header('content-type','application/pdf');
+                res.send(datafile);
+                 }
+              });
+        })
     }
     catch (e) { console.error(e.message); }
 

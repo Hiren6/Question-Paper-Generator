@@ -20,7 +20,8 @@ router.get('/:u_id', ensureAuthenticated, async (req, res) => {
         else {
             res.render('courses', {
                 courses : courses.rows,
-                user_id:u_id
+                user_id:u_id,
+                title:"HomePage"
             })
         }
     }

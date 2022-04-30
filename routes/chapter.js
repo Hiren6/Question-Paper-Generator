@@ -14,7 +14,8 @@ router.get('/:c_id', async (req, res) => {
 
         res.render('chapter', {
             chapter_id : c_id,
-            question : questions.rows
+            question : questions.rows,
+            title:"Question List"
         }); 
     }
 

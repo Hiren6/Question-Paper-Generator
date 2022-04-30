@@ -70,5 +70,9 @@ app.use('/course', ensureAuthenticated, require('./routes/course'))
 app.use('/chapter', ensureAuthenticated, require('./routes/chapter'))
 
 //student
-
 app.use('/student', require('./routes/student'));
+
+//404 page
+app.get('*', function(req, res){
+    res.render('error');
+});
