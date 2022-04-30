@@ -23,14 +23,7 @@
 			<div class="col" style="text-align: right;"><p style="margin: 0;">Time limit : <%= paper.duration %> mins</p></div>
 		</div>
 
-		<div class="row pt-3 px-4" style="border-bottom: 2px solid black;">
-			<!-- <h5 style="width: 100%; font-weight: bold;">Instructions :</h5> -->
-			<div class="container" style="max-width: 97%;text-align: justify;">
-				<ul style="font-weight: bold;">
-					<!-- SPACE FOR INSTRUCTION -->
-				</ul>
-			</div>
-		</div>
+
 		<div class="row mt-4" style="text-align: justify;">
             <% let i=0; %>
             <% if(question[0].q_type=="MCQ") {%>
@@ -40,15 +33,15 @@
 
 				<%for(i=0;i<question.length;i++){%>
                     <% if( question[i].q_type=="Subjective") break;%>
-					<li> <%= (i)%>
+					<li> <%= (i+1)%>
                         <%let q=question[i].q_stmt.split("#$")%>
 					<!-- <ul class="mb-4" type="1" style="list-style-type: none"> -->
-						<li style="padding-left: 10px"><%= q[0] %>    <b>[marks] </b></li>
+						<li style="padding-left: 10px"><%= q[0] %>     </b></li>
 						<ol class="mb-4" type="A">
-							<li style="padding-left: 10px"><%= q[1] %></li>
-							<li style="padding-left: 10px"><%= q[2] %></li>
-							<li style="padding-left: 10px"><%= q[3] %></li>
-							<li style="padding-left: 10px"><%= q[4] %> </li>
+							<li style="padding-left: 10px">(a) <%= q[1] %></li>
+							<li style="padding-left: 10px">(b) <%= q[2] %></li>
+							<li style="padding-left: 10px">(c) <%= q[3] %></li>
+							<li style="padding-left: 10px">(d)<%= q[4] %> </li>
 						</ol>
 
 
